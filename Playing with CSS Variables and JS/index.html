@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playing with CSS variables and JS</title>
+
+  <style type="text/css">
+    /* CSS Variables */
+    :root {
+      --base: #800080;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      max-width: 90%;
+      display: block;
+      margin: auto;
+      padding: var(--spacing);
+      filter: blur(var(--blur));
+      background: var(--base);
+    }
+
+    @media (min-width: 768px) {
+      img {
+        max-width: 60%;
+      }
+    }
+
+    .hl {
+      color: var(--base);
+      line-height: 1.5;
+    }
+
+    span {
+      background: var(--base);
+      color: #fff !important; 
+      padding: 0 1rem;
+      border-radius: 2rem;
+    }
+
+    /* common styles */
+    body {
+      font-family: 'Century Gothic', sans-serif;
+      text-align: center;
+      background: #f1f1f1;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+      max-width: 768px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .group{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+
+    label {
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+
+
+  </style>
+</head>
+<body>
+
+  <h1>Playing with <span class="hl">CSS</span> Variables and <span class="hl">JS</span></h1>
+
+  <p>Made with love by: <a href="https://athanwebdev.github.io" target="_blank">Jonathan Gaspado</a></p>
+
+  <div class="controls">
+    <div class="group">
+      <label for="spacing">Spacing</label>
+      <input type="range" name="spacing" value="10" min="10" max="200" data-sizing="px">
+    </div>
+
+    <div class="group">
+      <label for="blur">Blur</label>
+      <input type="range" name="blur" value="10" min="0" max="25" data-sizing="px">
+    </div>
+
+    <div class="group">
+      <label for="color">Color</label>
+      <input type="color" name="base" value="#800080">
+    </div>
+  </div>
+
+  <img src="img.jpg" alt="">
+
+
+  <script type="text/javascript">
+
+    // get all the inputs
+    const inputs = document.querySelectorAll('.group input');
+
+    // make a function that handles the update of the input
+    function handleUpdate() {
+
+      // get the input suffix if has no suffix make it blank
+      const suffix = this.dataset.sizing || '';
+
+      // add style to root element 
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+    }
+
+    // loop through each inputs
+    // run the handleUpdate() on change and on mousemove
+    inputs.forEach( input => input.addEventListener( 'change', handleUpdate) );
+    inputs.forEach( input => input.addEventListener( 'mousemove', handleUpdate) );
+
+
+  </script>
+</body>
+</html>
